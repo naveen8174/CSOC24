@@ -1,1 +1,0 @@
-from cops import cops_compl.py
