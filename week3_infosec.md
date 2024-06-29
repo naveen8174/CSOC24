@@ -102,3 +102,15 @@ For this challenge we are greatly dependent on the tool burpsuite which modifies
 ![this video](who_are_you.mp4) explains the work we've done and the header tags are searched through the internet.
 so I got the flag to be
 >picoCTF{http_h34d3rs_v3ry_c0Ol_much_w0w_f56f58a5} 
+we need some knowledge on http headers for which the document is provided while entering the link 
+1.  It asks us to only use PicoBrowser for that we have to change `User-Agent` to PicoBrowser
+2.  now that it asks we have to login to the page from pico site only so we use Referer we set it to http://mercury.picoctf.net:1270/
+3.  now it asks for date which only perates on year 2018 so we used `date: 1 Jun 2018`
+4.  now we're asked not to be tracked so `DNT` as true or 1
+5.  now again it asks for a sweden ip address for the client `X-Forwarded-For` and any swedish IP address
+6.  now change the language label to `sv` from `eng-Us`
+There you get the flag.
+
+# Intro to burp 
+even for this challenge as the name suggests we use burpsuite and we open the browser(chromium) in my case and then intecept(in proxy) it we use any random credential earlier and then it asks for 2 factor auth for an otp we give a random number to it and go to the intercept page now at last we find otp=....... so we clear that row and go to the browser so we observe our flag
+>picoCTF{#0TP_Bypvss_SuCc3$S_e1eb16ed}
