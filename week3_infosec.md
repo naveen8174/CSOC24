@@ -114,3 +114,53 @@ There you get the flag.
 # Intro to burp 
 even for this challenge as the name suggests we use burpsuite and we open the browser(chromium) in my case and then intecept(in proxy) it we use any random credential earlier and then it asks for 2 factor auth for an otp we give a random number to it and go to the intercept page now at last we find otp=....... so we clear that row and go to the browser so we observe our flag
 >picoCTF{#0TP_Bypvss_SuCc3$S_e1eb16ed}
+
+# Client-Side-Again
+now we go through the source code and found that the javascript code is obfuscated and can be deobfuscated by the tools like [this](https://obf-io.deobfuscate.io/). Now we understand the code
+```
+var _0x5a46 = ['f49bf}', '_again_e', 'this', "Password Verified", "Incorrect password", 'getElementById', 'value', 'substring', 'picoCTF{', 'not_this'];
+(function (_0x4bd822, _0x2bd6f7) {
+  var _0xb4bdb3 = function (_0x1d68f6) {
+    while (--_0x1d68f6) {
+      _0x4bd822.push(_0x4bd822.shift());
+    }
+  };
+  _0xb4bdb3(++_0x2bd6f7);
+})(_0x5a46, 0x1b3);
+var _0x4b5b = function (_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0x5a46[_0x2d8f05];
+  return _0x4d74cb;
+};
+function verify() {
+  checkpass = document[_0x4b5b('0x0')]('pass')[_0x4b5b('0x1')];
+  split = 0x4;
+  if (checkpass[_0x4b5b('0x2')](0x0, split * 0x2) == _0x4b5b('0x3')) {
+    if (checkpass[_0x4b5b('0x2')](0x7, 0x9) == '{n') {
+      if (checkpass[_0x4b5b('0x2')](split * 0x2, split * 0x2 * 0x2) == _0x4b5b('0x4')) {
+        if (checkpass[_0x4b5b('0x2')](0x3, 0x6) == 'oCT') {
+          if (checkpass[_0x4b5b('0x2')](split * 0x3 * 0x2, split * 0x4 * 0x2) == _0x4b5b('0x5')) {
+            if (checkpass.substring(0x6, 0xb) == 'F{not') {
+              if (checkpass[_0x4b5b('0x2')](split * 0x2 * 0x2, split * 0x3 * 0x2) == _0x4b5b('0x6')) {
+                if (checkpass[_0x4b5b('0x2')](0xc, 0x10) == _0x4b5b('0x7')) {
+                  alert(_0x4b5b('0x8'));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } else {
+    alert(_0x4b5b('0x9'));
+  }
+}
+```
+here it says 
+1.  7 - {
+2.  8 - n
+3.  3-o,4-C,5-T
+4.  6-F,9-o,10-t
+so it is picoCTF{not_this_again_f49bf} as we can say it by the relative position of the variable \_0x4b5b with checkpass\_
+>picoCTF{not_this_again_f49bf}
+# JavaScript kiddie-1
