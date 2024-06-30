@@ -253,7 +253,7 @@ so let's check them all using burpsuite
 we should bruteforce all these possibilities now
 and the key was found to be `5108180345363640`
 and I got the qr code:
-![image](image.png)
+![image](qrcode.png)
 then I used this [tool](https://qrcoderaptor.com/)  
 and got the flag to be
 >picoCTF{066cad9e69c5c7e5d2784185c0feb30b}
