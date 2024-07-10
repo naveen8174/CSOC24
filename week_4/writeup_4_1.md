@@ -305,4 +305,69 @@ here the variable var48_ continuously loaded `d`,`c` in to it and then loaded `k
 so the password should be 
 >cracked
 
-# chall_3
+# chall_4
+here the code is 
+```
+void _start(int64_t arg1 @ r13, int64_t arg2 @ r15) __noreturn
+{
+    syscall(sys_write {1}, 1, "Enter your password: Wrong passw…", 0x15);
+    syscall(sys_read {0}, 0, &password, 0x10);
+    _verify(&password, arg1);
+    _verify(&data_402040, arg1);
+    if (arg2 == arg2)
+    {
+        _verify(&data_40203c, arg1);
+        _verify(&data_402044, arg1);
+        if ((arg2 == arg2 && (arg1 == 0x42e && (arg2 + 0xb) == arg2)))
+        {
+            _correct();
+            /* no return */
+        }
+    }
+    _incorrect();
+    /* no return */
+}
+
+void _exit() __noreturn
+{
+    syscall(sys_exit {0x3c}, 0);
+    /* no return */
+}
+
+char* _verify(char* arg1 @ rax, int64_t arg2 @ r13)
+{
+    int64_t r15 = 0;
+    int64_t i = 0;
+    do
+    {
+        i = (i + 1);
+        int64_t rcx;
+        rcx = *arg1;
+        arg1 = &arg1[1];
+        r15 = (r15 + rcx);
+    } while (i != 4);
+    return arg1;
+}
+
+void _correct() __noreturn
+{
+    syscall(sys_write {1}, 1, "Access granted!\n", 0x10);
+    _exit();
+    /* no return */
+}
+
+void _incorrect() __noreturn
+{
+    syscall(sys_write {1}, 1, "Wrong password!\nAccess granted!…", 0x10);
+    _exit();
+    /* no return */
+}
+
+```
+
+from debugging I've found that arg1 is r13 register and basically the sum of last four characters ascii value and r15 or arg2 is set to 0. and even though the if conditional statement went incorrect the access granted message is stored in syscall of incorrect operation and we need to look into the condition when it'll be printed as the correct() function can never be called as the if statement says `if ((arg2 == arg2 && (arg1 == 0x42e && (arg2 + 0xb) == arg2)))` as last two statements can't be true in any case so the only way to go is trough changing edx to `1f` so let's check methods to do so!!  
+wee can just go to gdb and then fix a breakpoint near `syscall` and there we can change the edx by
+>$edx = 0x1f
+
+>echo "b *0x0000000000401106\nrun\nhello\nset $rdx=0x1f\ninfo registers\nn" | gdb ./chall_4
+
